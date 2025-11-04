@@ -47,6 +47,10 @@ async def received_message(request: Request):
         # Verifica si hay mensajes reales dentro de la carga útil
         if "messages" in value and len(value["messages"]) > 0:
             # Extrae el primer mensaje de la lista de mensajes
+            print("-"*20)
+            print(f"Nuevo mensaje recibido:\n{value['messages'][0]}")
+            print("-"*20)
+            
             type_message, content = get_message_type(value["messages"][0])
             
             message = value["messages"][0]
