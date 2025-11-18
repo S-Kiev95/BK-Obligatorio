@@ -1,13 +1,24 @@
 from fastapi import FastAPI, HTTPException, Request
 from utils.get_type_message import get_message_type
 
+from models.repartidor import Repartidor
+from models.gestora import Gestora
+
 app = FastAPI()
 
 @app.get("/welcome")
 def index():
     return {"mensaje": "welcome developer"}
 
-ACCESS_TOKEN = "EAFbWWhmay3oBP9VJALkqX9PJ41Mu3tB2YhccNTOAoozZAexeLyYtVhLGbEeU6V7MPDBfbGncqCOlSp4utqwbepF0qfM1yOT8Ql5oXwWr8aV0RfabVvtvGlewKMJ1LpjnRomIVhkoGvZAsqbx7iFNWg7MxLBwEoe3zF39resal17g0HOh1iiljq2qFcf5rtVo5lZCB3DXoA5ytQ6d8GcLiWLFfvxHgxN2oQ9YCKlvSkMvsHxY8aAmryc50GeMe02bJFg0SXf5NlC35AomHYcDxjV" 
+ACCESS_TOKEN = "xxxxxxyyyyyzzzzzz" 
+
+@app.post("/repartidor")
+async def agregar_repartidor(
+    repartidor: Repartidor
+    ):
+    print(f"Repartidor creado: {repartidor}")
+    Gestora().agregar_repartidor(repartidor)
+    return {"mensaje": "Repartidor agregado exitosamente"}
 
 @app.get("/whatsapp")
 async def verify_token(request: Request):
@@ -68,6 +79,9 @@ async def received_message(request: Request):
         # En caso de error, todavía se recomienda devolver una respuesta de éxito (200)
         # para evitar reintentos continuos, aunque se debe registrar el error.
         return "EVENT_RECEIVED"
+    
+    
+
     
 if __name__ == "__main__":
     import uvicorn
